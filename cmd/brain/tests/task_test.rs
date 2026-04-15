@@ -56,7 +56,7 @@ fn task_create_with_optional_fields() {
             "--title",
             "Build brain CLI",
             "--description",
-            "Rust CLI for puck.db",
+            "Rust CLI for brain.db",
             "--assigned-to",
             "Rune",
             "--priority",

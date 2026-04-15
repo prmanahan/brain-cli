@@ -1,0 +1,21 @@
+[package]
+name = "brain"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "brain"
+path = "main.rs"
+
+[dependencies]
+brain-core = { workspace = true }
+clap = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+assert_cmd = { workspace = true }
+serde_json = { workspace = true }
+rusqlite = { workspace = true }
+tempfile = { workspace = true }

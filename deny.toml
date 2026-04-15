@@ -1,0 +1,86 @@
+# cargo-deny configuration for brain-cli.
+#
+# License policy tiers:
+#   - Green  (MIT / Apache-2.0 / BSD / ISC / Unicode / Zlib / etc.): allow
+#   - Yellow (LGPL / MPL-2.0 / CDDL / EPL): implicit warn via allowlist miss
+#   - Red    (GPL / AGPL / SSPL): implicit deny via allowlist miss
+#
+# Under schema version = 2, cargo-deny uses an allowlist-only model: any
+# license not in `allow` is rejected. Explicit copyleft/unlicensed denylists
+# from the older schema are no longer needed — the allowlist itself is the
+# policy.
+#
+# The allowlist below is the authoritative source for which licenses ship
+# in the brain-cli dependency closure.
+
+[graph]
+all-features = true
+
+[output]
+feature-depth = 1
+
+# ---------------------------------------------------------------------------
+# Licenses
+# ---------------------------------------------------------------------------
+
+[licenses]
+version = 2
+confidence-threshold = 0.93
+
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",  # required by some LLVM-adjacent crates
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Unlicense",
+    "CC0-1.0",
+    "Unicode-3.0",                      # required by unicode-ident
+    "Unicode-DFS-2016",                 # required by some transitive deps
+    "Zlib",                             # required by foldhash
+]
+
+exceptions = []
+
+# ---------------------------------------------------------------------------
+# Advisories (RUSTSEC)
+# ---------------------------------------------------------------------------
+#
+# Under schema version = 2, vulnerabilities are denied by default and the
+# older `vulnerability`/`notice` severity fields were removed. `unmaintained`
+# now takes a crate-scope (all/workspace/transitive/none) rather than a
+# severity level.
+
+[advisories]
+version = 2
+db-path = "~/.cargo/advisory-db"
+db-urls = ["https://github.com/rustsec/advisory-db"]
+unmaintained = "workspace"
+yanked = "warn"
+ignore = []
+
+# ---------------------------------------------------------------------------
+# Bans (crate-level policy)
+# ---------------------------------------------------------------------------
+
+[bans]
+multiple-versions = "warn"
+wildcards = "warn"
+highlight = "all"
+workspace-default-features = "allow"
+external-default-features = "allow"
+allow = []
+deny = []
+skip = []
+skip-tree = []
+
+# ---------------------------------------------------------------------------
+# Sources
+# ---------------------------------------------------------------------------
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []
